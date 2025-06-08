@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>신경과 스키마 퀴즈</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      background-color: #f2f2f2;
+      padding: 20px;
+      margin: 0;
+    }
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin: 15px auto;
+      max-width: 90%;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: #0077cc;
+      color: white;
+    }
+    .image {
+      margin-top: 12px;
+      display: none;
+    }
+    img {
+      max-width: 100%;
+      width: 100%;
+      height: auto;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🧠 신경과 증상 랜덤 퀴즈</h1>
+  <div id="quizContainer"></div>
+  <button onclick="shuffleQuiz()">🔄 다시 섞기</button>
+
+  <script>
+    const data = [
+      { text: "발작을 했어요", img: "그림1.png" },
+      { text: "머리가 자주 아파요", img: "그림2.png" },
+      { text: "의식이 떨어졌어요", img: "그림3.png" },
+      { text: "한쪽 팔다리를 못 움직여요", img: "그림4.png" },
+      { text: "다리 힘이 빠져요", img: "그림5.png" },
+      { text: "손이 떨려요", img: "그림6.png" },
+      { text: "기억력이 떨어져요", img: "그림7.png" },
+      { text: "어지러워요", img: "그림8.png" }
+    ];
+
+    function shuffle(array) {
+      return array.sort(() => Math.random() - 0.5);
+    }
+
+    function shuffleQuiz() {
+      const shuffled = shuffle([...data]);
+      const container = document.getElementById("quizContainer");
+      container.innerHTML = "";
+
+      shuffled.forEach((item, index) => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        const text = document.createElement("div");
+        text.textContent = `${index + 1}. ${item.text}`;
+        card.appendChild(text);
+
+        const button = document.createElement("button");
+        button.textContent = "정답 보기";
+
+        const image = document.createElement("div");
+        image.className = "image";
+        image.innerHTML = `<img src="${item.img}" alt="${item.text}">`;
+        card.appendChild(button);
+        card.appendChild(image);
+
+        let isVisible = false;
+        button.onclick = () => {
+          isVisible = !isVisible;
+          image.style.display = isVisible ? "block" : "none";
+        };
+
+        container.appendChild(card);
+      });
+    }
+
+    // 초기 실행
+    shuffleQuiz();
+  </script>
+
+</body>
+</html>
